@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<launch>
+
+	<arg name="id_robot" default="rb1_base"/>
+	<arg name="has_elevator" default="false"/>
+	<arg name="launch_amcl_and_mapserver" default="false"/>
+	<arg name="launch_gmapping" default="false"/>
+	<arg name="launch_move_base" default="false"/>
+	<arg name="launch_move" default="false"/>
+	<arg name="map_file" default="$(find rb1_base_localization)/maps/empty/empty.yaml"/>
+	<arg name="prefix" value="$(arg id_robot)_"/>
+	<arg name="global_frame" default="$(arg prefix)map"/>
+  <arg name="launch_base_hw_sim" default="false"/>
+  <arg name="launch_pad" default="false"/>
+  <arg name="cmd_vel_topic" default="robotnik_base_control/cmd_vel"/>
+	<arg name="x_init_pose" default="0"/>
+	<arg name="y_init_pose" default="0"/>
+	<arg name="yaw_init_pose" default="0"/>
+
+	<!-- BEGIN ROBOT-->
+	<group ns="$(arg id_robot)">
+
+		<!-- pad -->
+		<include  if="$(arg launch_pad)" file="$(find rb1_base_pad)/launch/rb1_base_pad.launch"/>
+
+		<!-- amcl and map server base-->
+		<include if="$(arg launch_amcl_and_mapserver)" file="$(find rb1_base_localization)/launch/map_server.launch">
+			<arg name="prefix" value="$(arg prefix)"/>
+			<arg name="map_file" value="$(arg map_file)"/>
+			<arg name="frame_id" value="$(arg global_frame)"/>
+		</include>
+
+		<include if="$(arg launch_amcl_and_mapserver)" file="$(find rb1_base_localization)/launch/amcl.launch">
+      <arg name="global_frame" value="$(arg global_frame)"/>
+			<arg name="prefix" value="$(arg prefix)"/>
+			<arg name="x_init_pose" value="$(arg x_init_pose)"/>
+			<arg name="y_init_pose" default="$(arg y_init_pose)"/>
+			<arg name="yaw_init_pose" default="$(arg yaw_init_pose)"/>
+		</include>
+
+		<!-- move base -->
+		<include if="$(arg launch_move_base)" file="$(find rb1_base_navigation)/launch/navigation/move_base.launch">
+			<arg name="prefix" value="$(arg prefix)"/>
+			<arg name="global_frame" value="$(arg global_frame)"/>
+			<arg name="laser_frame" value="$(arg prefix)laser_link"/>
+		</include>
+
+		<!-- gmapping -->
+		<include if="$(arg launch_gmapping)" file="$(find rb1_base_localization)/launch/gmapping.launch">
+			<arg name="prefix" value="$(arg prefix)"/>
+		</include>
+
+		<!-- base_hw_sim -->
+		<include if="$(arg launch_base_hw_sim)" file="$(find robotnik_base_hw_sim)/launch/rb1_hw_sim.launch">
+			<arg name="prefix" value="$(arg prefix)"/>
+		</include>
+
+        <!-- move  -->
+		<include if="$(arg launch_move)" file="$(find rb1_base_navigation)/launch/move.launch">
+			<arg name="id_robot" value="$(arg id_robot)"/>
+    </include>
+
+		<node pkg="twist_mux" type="twist_mux" name="twist_mux">
+			<rosparam command="load" file="$(find rb1_base_control)/config/twist_mux.yaml" />
+			<remap from="cart_docker/cmd_vel" to="docker/cmd_vel"/>
+			<remap from="cmd_vel_out" to="$(arg cmd_vel_topic)" />
+		</node>
+
+	</group>
+
+</launch>
