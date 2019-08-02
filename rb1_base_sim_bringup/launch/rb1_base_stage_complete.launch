@@ -73,8 +73,8 @@
 			<arg name="launch_move" value="$(arg move_robot_a)"/>
 			<arg name="launch_pad" value="$(arg launch_pad_robot_a)"/>
 			<arg name="x_init_pose" value="$(arg x_init_pose_robot_a)"/>
-			<arg name="y_init_pose" default="$(arg y_init_pose_robot_a)"/>
-			<arg name="yaw_init_pose" default="$(arg yaw_init_pose_robot_a)"/>
+			<arg name="y_init_pose" value="$(arg y_init_pose_robot_a)"/>
+			<arg name="yaw_init_pose" value="$(arg yaw_init_pose_robot_a)"/>
 
 		</include>
 
@@ -90,8 +90,8 @@
 	    <arg name="launch_move" value="$(arg move_robot_b)"/>
 			<arg name="launch_pad" value="$(arg launch_pad_robot_b)"/>
 			<arg name="x_init_pose" value="$(arg x_init_pose_robot_b)"/>
-			<arg name="y_init_pose" default="$(arg y_init_pose_robot_b)"/>
-			<arg name="yaw_init_pose" default="$(arg yaw_init_pose_robot_b)"/>
+			<arg name="y_init_pose" value="$(arg y_init_pose_robot_b)"/>
+			<arg name="yaw_init_pose" value="$(arg yaw_init_pose_robot_b)"/>
 		</include>
 
 		<include if="$(arg launch_robot_c)" file="$(find rb1_base_stage)/launch/rb1_base_one_robot.launch">
@@ -106,8 +106,8 @@
 	    <arg name="launch_move" value="$(arg move_robot_c)"/>
 			<arg name="launch_pad" value="$(arg launch_pad_robot_c)"/>
 			<arg name="x_init_pose" value="$(arg x_init_pose_robot_c)"/>
-			<arg name="y_init_pose" default="$(arg y_init_pose_robot_c)"/>
-			<arg name="yaw_init_pose" default="$(arg yaw_init_pose_robot_c)"/>
+			<arg name="y_init_pose" value="$(arg y_init_pose_robot_c)"/>
+			<arg name="yaw_init_pose" value="$(arg yaw_init_pose_robot_c)"/>
 		</include>
 
 		<!-- stage simulation and rviz visualization-->
