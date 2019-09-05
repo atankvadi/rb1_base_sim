@@ -13,7 +13,7 @@
 
 
 	<!-- arguments robot a -->
-	<arg name="id_robot_a" default="rb1_base"/>
+	<arg name="id_robot_a" default="rb1_base_a"/>
 	<arg name="launch_robot_a" default="false"/>
 	<arg name="map_file_a" default="$(find rb1_base_localization)/maps/willow_garage/willow_garage_stage.yaml"/>
 	<arg name="gmapping_robot_a" default="false"/>
@@ -34,7 +34,7 @@
 	<arg name="gmapping_robot_b" default="false"/>
 	<arg name="move_base_robot_b" default="true"/>
 	<arg name="amcl_and_mapserver_b" default="true"/>
-	<arg name="map_frame_b" default="$(arg id_robot_a)_map"/>
+	<arg name="map_frame_b" default="$(arg id_robot_b)_map"/>
   <arg name="move_robot_b" default="false"/>
 	<arg name="has_elevator_robot_b" default="false"/>
 	<arg name="launch_pad_robot_b" default="false"/>
@@ -50,7 +50,7 @@
 	<arg name="gmapping_robot_c" default="false"/>
 	<arg name="move_base_robot_c" default="true"/>
 	<arg name="amcl_and_mapserver_c" default="true"/>
-	<arg name="map_frame_c" default="$(arg id_robot_a)_map"/>
+	<arg name="map_frame_c" default="$(arg id_robot_c)_map"/>
   <arg name="move_robot_c" default="false"/>
 	<arg name="has_elevator_robot_c" default="false"/>
 	<arg name="launch_pad_robot_c" default="false"/>
@@ -115,6 +115,12 @@
 			<arg name="world" value="$(arg world)"/>
 		</include>
 		<node if="$(arg launch_rviz)" name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_config)" required="true"/>
+
+		<node if="$(arg launch_robot_a)" pkg="tf" type="static_transform_publisher" name="tf_rb1_base_a_map_to_map" args="0 0 0 0 0 0 /map /rb1_base_a_map 200"/>
+		<node if="$(arg launch_robot_b)" pkg="tf" type="static_transform_publisher" name="tf_rb1_base_b_map_to_map" args="0 0 0 0 0 0 /map /rb1_base_b_map 200"/>
+		<node if="$(arg launch_robot_c)" pkg="tf" type="static_transform_publisher" name="tf_rb1_base_c_map_to_map" args="0 0 0 0 0 0 /map /rb1_base_c_map 200"/i>
+
+
 
 
 </launch>
