@@ -88,7 +88,7 @@ floorplan
 )
 
 # throw in two robots
-rb1( pose [ -11.277 23.266 0 180.000 ] name "rb1_base" color "blue")
+rb1( pose [ -11.277 23.266 0 180.000 ] name "rb1_base_a" color "blue")
 rb1( pose [ -13.277 22.266 0 180.000 ] name "rb1_base_b" color "green")
 rb1( pose [ -13.277 23.266 0 180.000 ] name "rb1_base_c" color "yellow")
 #rb1( pose [ -11.277 22.266 0 180.000 ] name "rb1_base_4" color "blue")
